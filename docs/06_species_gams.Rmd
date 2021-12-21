@@ -1,0 +1,201 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source("01_global.R")
+
+options(scipen = 999)
+
+density_sp <- 
+  c("warty sea cucumber", 
+    "California spiny lobster",
+    "Coronado urchin") 
+biomass_sp <- 
+  c("Kellets whelk",
+    "white sea urchin",
+    "garibaldi",
+    "orange puffball sponge",
+    "bladder chain kelp",
+    "red sea urchin",
+    "California sheephead male",
+    "bat star",
+    "giant kelp",
+    "purple sea urchin",
+    "kelp bass",
+    "sunflower star",
+    "giant spined sea star",
+    "red abalone",
+    "rock wrasse")
+cover_sp <- 
+  c("bladder chain kelp")
+```
+
+```{r}
+density <- Density %>%  
+  dplyr::filter(CommonName %in% density_sp) %>% 
+  left_join(SST_Anomaly_Index_Mean)
+
+biomass <- Biomass %>%  
+  dplyr::filter(CommonName %in% biomass_sp) %>% 
+  left_join(SST_Anomaly_Index_Mean)
+
+cover <- RPC %>%  
+  dplyr::filter(CommonName %in% cover_sp) %>% 
+  left_join(SST_Anomaly_Index_Mean)
+```
+
+```{r}
+
+
+sp_model <- function(df, response) {
+  gam(
+    formula(
+      paste(
+        response, '~
+        ReserveStatus +
+        IslandCode +
+        Mean_ONI_Anom +
+        te(SurveyYear, by = interaction(IslandCode, ReserveStatus), k = 6) +
+        s(Longitude, Latitude, k = 5)'
+      )
+    ), data = df, method = 'REML', family = nb()
+  )
+}
+```
+
+
+```{r}
+GAMS <- density %>%
+  group_by(CommonName) %>%
+  nest() %>%
+  mutate(model = map(data, sp_model, response = 'Mean_Density'),
+         tidy = map(model, broom::tidy),
+                    # , parametric = T),
+         resids = map2(data, model, add_residuals),
+         predictions = map2(data, model, add_predictions),
+         draw = map(model, gratia::draw, scales = 'free', 
+                    # dist = .25,
+                    parametric = T,
+                    ncol = 3,
+                    contour = F,
+                    continuous_fill = scale_fill_viridis_c() ))
+
+GAM_resids <- GAMS %>%
+  unnest(resids) %>% 
+  select(-data, -model, -tidy, -predictions, -draw)
+
+GAM_tidy <- GAMS %>% 
+  select(CommonName, tidy) %>% 
+  unnest(tidy)
+
+```
+
+```{r}
+# draw(GAMS[[3]][[1]], parametric = T)
+```
+
+
+```{r fig.height=10, fig.width=10}
+for (sp in unique(GAMS$CommonName)){
+  GAM_draw <- GAMS %>% 
+    filter(CommonName == sp) %>% 
+    select(CommonName, draw) 
+  p1 <- GAM_draw$draw[[1]]
+  p1 <- p1 +
+    guides(fill = guide_colourbar(
+      title = "Effect",
+      barwidth = unit(.25, "cm"))) &
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 10),
+      plot.subtitle = element_text(size = 7),
+      axis.title.y = element_blank()
+    )
+  p1 <- p1 + plot_annotation(title = paste(sp))
+  print(p1)
+}
+
+```
+
+
+
+
+
+
+```{r}
+GAMS <- biomass %>%
+  group_by(CommonName) %>%
+  nest() %>%
+  mutate(model = map(data, sp_model, response = 'Mean_Biomass'),
+         tidy = map(model, broom::tidy),
+         resids = map2(data, model, add_residuals),
+         predictions = map2(data, model, add_predictions),
+         draw = map(model, gratia::draw, scales = 'free', 
+                    # select = 1:9, 
+                    contour = F,
+                    continuous_fill = scale_fill_viridis_c() ))
+
+GAM_resids <- GAMS %>%
+  unnest(resids) %>% 
+  select(-data, -model, -tidy, -predictions, -draw)
+
+GAM_tidy <- GAMS %>% 
+  select(CommonName, tidy) %>% 
+  unnest(tidy)
+
+```
+
+```{r fig.height=7.5, fig.width=10}
+for (sp in unique(GAMS$CommonName)){
+  GAM_draw <- GAMS %>% 
+    filter(CommonName == sp) %>% 
+    select(CommonName, draw) 
+  p1 <- GAM_draw$draw[[1]]
+  p1 <- p1 &
+    labs(title = sp) &
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 10),
+      plot.subtitle = element_text(size = 7),
+      axis.title = element_blank()
+    )
+  print(p1)
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r Plotting heatmaps to check for spatial autocorrelation in residuals+}
+for (spp in species) {
+  
+  spp_resids <- eval(parse(text = paste(spp, "resids", sep = "_")))
+  title <- gsub(pattern = "_", replacement = " ", spp) 
+    
+  p <- ggplot() +
+    geom_tile(data = spp_resids, aes(x = SurveyYear, y = SiteCode, fill = residuals)) +
+    scale_fill_viridis_c(option = "magma") +
+    scale_y_discrete(expand = c(0, 0)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    # facet_wrap(~IslandCode, ncol = 1, drop = T) +
+    labs(title = title) +
+    theme_classic()
+  print(p)
+}
+```
+

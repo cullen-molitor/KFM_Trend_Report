@@ -1,0 +1,44 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source("01_global.R")
+```
+
+```{r}
+  nMDS <- arrow::read_feather('Tidy_Data/nMDS.feather') |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short))
+  
+  ellipses <- arrow::read_feather("Tidy_Data/ellipses.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short))
+  
+  anosim_table <- arrow::read_feather("Tidy_Data/ANOSIM.feather")
+```
+
+## Com Sim
+
+```{r Community Similarity, warning= FALSE, message= FALSE, fig.height=7.5, fig.width=10}
+ggplot2::ggplot() +
+  ggplot2::geom_path(data = ellipses, size = 1.25,
+            aes(x = NMDS1, y = NMDS2, color = IslandName)) +
+  ggplot2::geom_point(data = nMDS, size = 1.25,
+             aes(x = NMDS1, y = NMDS2, shape = ReserveStatus, color = IslandName)) +
+  ggplot2::geom_text(data = nMDS, size = 2, vjust = 1.5, hjust = 1,
+            aes(x = NMDS1, y = NMDS2, label = SiteCode)) +
+  ggplot2::geom_text(
+    data = anosim_table, size = 3, vjust = -1, hjust = 1.1,
+    aes(x = -Inf, y = -Inf, 
+        label = paste("P-Value:", P_val, "  R:", round(R_statistic, 2), sep = ""))) +
+  ggplot2::guides(shape = guide_legend(order = 1)) +
+  ggplot2::scale_color_viridis_d(end = 0.9) +
+  ggplot2::coord_fixed() +
+  ggplot2::scale_x_reverse() +
+  ggplot2::facet_wrap(facets = vars(SurveyYear), nrow = 3) +
+  ggplot2::labs(color = "Island",
+       shape = "Reserve Status") +
+  nMDS_theme()
+```

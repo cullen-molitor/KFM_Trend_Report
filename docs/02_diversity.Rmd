@@ -1,0 +1,38 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source(here::here("docs", "00_global.R"))
+```
+
+```{r}
+Diversity <- arrow::read_feather("Tidy_Data/Diversity_2005.feather") |> 
+  dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                IslandName = factor(IslandName, levels = Island_Levels_Short))
+
+
+Diversity_Orginal_16 <- arrow::read_feather("Tidy_Data/Diversity_All.feather") |> 
+  dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                IslandName = factor(IslandName, levels = Island_Levels_Short))
+```
+
+## Sha Ind
+
+```{r Shannon Index Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Diversity_Plot(Sci_Name = "shannon_2005")
+```
+
+```{r Shannon Index original 16 sites, warning=FALSE, message=FALSE, fig.height=6, fig.width=10}
+Diversity_16_Plot(Sci_Name = "shannon_all") 
+```
+## Sim Ind
+
+```{r Simpsons Index Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Diversity_Plot(Sci_Name = "simpson_2005")
+```
+
+```{r Simpsons Index original 16 sites, warning=FALSE, message=FALSE, fig.height=6, fig.width=10}
+Diversity_16_Plot(Sci_Name = "simpson_all") 
+```

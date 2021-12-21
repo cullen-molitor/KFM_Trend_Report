@@ -1,0 +1,204 @@
+ScientificName,common_name,classification,measurement,a,b
+Acarnus sp.,NA,invert,percent cover,NA,0.803
+Cliona celata,NA,invert,percent cover,NA,0.918
+Halichondria panicea,NA,invert,percent cover,NA,2.335
+Leucilla nuttingi,NA,invert,percent cover,NA,0.193
+Tethya aurantia,orange puffball sponge,invert,diameter,0.003,2.471
+Abietinaria sp.,NA,invert,percent cover,NA,0.049
+Aglaophenia sp.,NA,invert,percent cover,NA,0.217
+Anthopleura artemisia,NA,invert,disc diameter,0.027,1.492
+Astrangia lajollaensis,La Jolla cup coral,invert,percent cover,NA,0.048
+Balanophyllia elegans,orange cup coral,invert,disc diameter,0.006,2.001
+Corynactis californicus,club-tipped anemone,invert,percent cover,NA,0.284
+Epiactis prolifera,NA,invert,percent cover,NA,0.349
+Hydractinia milleri,NA,invert,percent cover,NA,0.03
+Lophogorgia chilensis,red gorgonian,invert,colony width,0.018,1.529
+Muricea californica,California golden gorgonian,invert,colony width,0.002,2.001
+Muricea fruticosa,brown gorgonian,invert,colony width,0.002,2.001
+Pachycerianthus fimbriatus,NA,invert,disc diameter,0.11,1.597
+Paracyathus stearnsii,NA,invert,percent cover,NA,0.545
+Phyllactis spp.,NA,invert,disc diameter,0.006,1.799
+Plumularia sp.,NA,invert,percent cover,NA,0.012
+Urticina lofotensis,white-spotted rose anemone,invert,disc diameter,0.39,1.04
+Cirriformia luxuriosa,NA,invert,percent cover,NA,0.195
+Dodecaceria fewkesi,NA,invert,percent cover,NA,0.322
+Eudistylia polymorpha,NA,invert,body diameter,0.23,1.426
+Phragmatopoma californica,colonial sand-tube worm,invert,percent cover,NA,0.014
+Salmacina tribranchiata,NA,invert,percent cover,NA,2.307
+Aplysia californica,California brown sea hare,invert,retracted length,0.19,1.575
+Calliostoma tricolor,NA,invert,shell length,1.30E-04,3.36
+Chaceia ovoidea,NA,invert,siphon diameter,5.9,1.058
+Conus californicus,NA,invert,shell length,7.50E-04,2.578
+Crassedoma giganteum,rock scallop,invert,shell length,9.60E-04,2.733
+Cypraea spadicea,chestnut cowrie,invert,shell length,0.006,2.114
+Doriopsilla albopunctata,NA,invert,retracted length,1.30E-04,2.801
+Haliotis rufescens,red abalone,invert,shell length,4.20E-04,2.797
+Kelletia kelletii,Kellet's whelk,invert,shell length,1.50E-04,2.932
+Lithophaga plumula,NA,invert,siphon diameter,0.89,1.031
+Lithopoma gibberosa,red turban snail,invert,shell length,6.50E-04,2.823
+Megathura crenulata,giant keyhole limpet,invert,body length,0.025,1.932
+Mitra idae,NA,invert,shell length,9.70E-04,2.377
+Mytilus californianus,NA,invert,shell length,0.002,2.078
+Mytilus galloprovincialis,NA,invert,shell length,1.20E-05,3.382
+Norrisia norrisi,NA,invert,shell length,0.001,2.676
+Octopus bimaculoides,NA,invert,arm length,0.023,1.631
+Parapholas californica,NA,invert,siphon diameter,4.4,0.919
+Peltodoris nobilis,NA,invert,retracted length,0.002,2.267
+Pteropurpura trialata,NA,invert,shell length,8.20E-04,2.366
+Serpulorbis squamiger,NA,invert,percent cover,NA,0.571
+Tegula brunnea,NA,invert,shell length,0.004,2.365
+Balanus glandula,NA,invert,percent cover,NA,0.685
+Loxorhynchus grandis carapace,NA,invert,diameter,0.08,1.973
+Panulirus interruptus,California spiny lobster,invert,carapace length,0.001,2.914
+Pugettia producta carapace,NA,invert,diameter,0.001,2.51
+Bugula californica,NA,invert,percent cover,NA,0.392
+Bugula neritina,NA,invert,percent cover,NA,0.189
+Cellaria sp.,NA,invert,percent cover,NA,0.164
+Diaperoecia californica,Southern staghorn bryozoan,invert,percent cover,NA,0.893
+Thalamoporella californica,NA,invert,percent cover,NA,0.594
+Cucumaria piperata,NA,invert,retracted length,0.001,2.18
+Cucumaria salma,NA,invert,tentacle diameter,0.36,1.017
+Dermasterias imbricata,NA,invert,body diameter,7.7,0.701
+Eupentacta quinquesemita,NA,invert,retracted length,7.80E-04,2.235
+Lissothuria nutriens,NA,invert,retracted length,0.002,2.196
+Lytechinus anamesus,white sea urchin,invert,test diameter,3.20E-04,3.044
+Ophioplocus esmarki,NA,invert,disc diameter,0.004,2.253
+Ophiothrix spiculata,spiny brittle star,invert,disc diameter,0.005,2.318
+Pachythyone rubra,aggregated red sea cucumber,invert,retracted length,8.20E-04,2.136
+Parastichopus californicus,NA,invert,retracted length,0.082,1.539
+Parastichopus parvimensis,warty sea cucumber,invert,retracted length,0.009,2.123
+Patiria miniata,bat star,invert,body diameter,1.40E-04,2.712
+Pisaster brevispinus,NA,invert,body diameter,0.002,2.147
+Pisaster giganteus,giant-spined sea star,invert,body diameter,0.01,1.773
+Pisaster ochraceus,ochre sea star,invert,body diameter,2.20E-04,2.592
+Pycnopodia helianthoides,sunflower star,invert,body diameter,3.70E-05,2.97
+Strongylocentrotus franciscanus,red sea urchin,invert,test diameter,5.90E-04,2.917
+Strongylocentrotus purpuratus,purple sea urchin,invert,test diameter,5.90E-04,2.87
+Archidistoma psammion,NA,invert,percent cover,NA,1.37
+Chelyosoma productum,NA,invert,percent cover,NA,0.718
+Clavelina huntsmani,NA,invert,percent cover,NA,0.379
+Cystodytes lobatus,NA,invert,percent cover,NA,0.922
+Euherdmania claviformis,NA,invert,percent cover,NA,0.792
+Polyclinum planum,NA,invert,body length,0.002,2.224
+Pycnoclavella stanleyi,NA,invert,percent cover,NA,0.449
+Ritterella aequalisiphonis,NA,invert,percent cover,NA,1.423
+Styela montereyensis,stalked tunicate,invert,siphon diameter,0.029,2.211
+Trididemnun opacum,NA,invert,percent cover,NA,0.423
+Megastraea undosa,wavy turban snail,invert,shell length,6.50E-04,2.823
+Tegula regina,queen tegula,invert,shell length,6.50E-04,2.823
+Macrocystis pyrifera,giant kelp,algae,stipe density,NA,0.008477333
+Haliotis fulgens,green abalone,invert,shell length,4.20E-04,2.797
+Haliotis corrugata,pink abalone,invert,shell length,4.20E-04,2.797
+Alloclinus holderi,island kelpfish,fish,total length,0.008303,3.089
+Anarrhichthys ocellatus,wolf eel,fish,total length,0.01289,2.9
+Anisotremus davidsonii,sargo,fish,total length,0.0152,3.056
+Apodichthys flavidus,NA,fish,total length,0.001504474,3.296
+Artedius corallinus,coralline sculpin,fish,total length,0.015796077,2.958
+Atherinops affinis,topsmelt,fish,total length,2.17E-05,2.59
+Atherinopsis californiensis,Jacksmelt,fish,total length,2.23E-06,3.354
+Atractoscion nobilis,white sea bass,fish,total length,0.012933659,2.92167
+Aulorhynchus flavidus,tubesnout,fish,total length,4.36E-04,3.43
+Balistes polylepis,finescale triggerfish,fish,total length,0.0547,2.66
+Brachyistius frenatus,kelp surfperch,fish,total length,0.011443793,3.3596
+Caulolatilus princeps,ocean whitefish,fish,total length,0.005962944,3.19
+Cebidichthys violaceus,monkeyface prickleback,fish,total length,0.01289,2.9
+Cephaloscyllium ventriosum,swell shark,fish,total length,1.59E-05,2.88
+Cheilotrema saturnum,black croaker,fish,total length,0.033447217,2.9223
+Chirolophis nugator,NA,fish,total length,0.008980509,2.952
+Chitonotus pugetensis,roughback sculpin,fish,total length,0.005,3.268
+Chromis punctipinnis,blacksmith,fish,total length,0.0082,3.255
+Citharichthys spp.,sanddab,fish,total length,0.0052,3.2325
+Citharichthys sordidus,pacific sanddab,fish,total length,0.0052,3.2325
+Citharichthys stigmaeus,speckled sanddab,fish,total length,0.0052,3.2325
+Clinocottus analis,NA,fish,total length,0.015796077,2.958
+Cymatogaster aggregata,shiner surfperch,fish,total length,0.018514423,3.162
+Embiotoca jacksoni,black surfperch,fish,total length,0.016884569,3.3244
+Embiotoca lateralis,striped surfperch,fish,total length,0.015758712,3.01
+Hypsurus caryi,rainbow surfperch,fish,total length,0.015758712,3.01
+Engraulis mordax,northern anchovy,fish,total length,0.0485,2.413
+Enophrys bison,NA,fish,total length,1.61E-05,3.055
+Galeorhinus galeus,tope shark,fish,total length,0.006599022,2.9285
+Gibbonsia,kelpfish,fish,total length,0.0031,3.243
+Girella nigricans,opaleye,fish,total length,0.024045289,3.08
+Gymnothorax mordax,California moray,fish,total length,3.00E-04,3.4274
+Halichoeres semicinctus,rock wrasse,fish,total length,0.006504479,3.16
+Hemilepidotus hemilepidotus,NA,fish,total length,2.82E-05,2.896
+Hermosilla azurea,zebra perch,fish,total length,1.37E-05,3.1025
+Heterodontus francisci,horn shark,fish,total length,0.008896978,2.995
+Heterostichus rostratus,giant kelpfish,fish,total length,0.0031,3.243
+Hexagrammos decagrammus,kelp greenling,fish,total length,2.60E-05,2.8928
+Hexagrammos lagocephalus,rock greenling,fish,total length,2.60E-05,2.8928
+Hyperprosopon anale,NA,fish,total length,1.86E-06,3.717
+Hyperprosopon argenteum,walleye surfperch,fish,total length,0.016962896,3.2295
+Hyperprosopon ellipticum,silver surfperch,fish,total length,0.007925113,3.227
+Hypsypops rubicundus,garibaldi,fish,total length,0.039549261,3.11
+Jordania zonope,NA,fish,total length,0.006426435,3.022
+Leiocottus hirundo,lavender sculpin,fish,total length,0.028436951,2.9
+Lepidogobius lepidus,NA,fish,total length,10.43649166,3.1
+Lethops connectens,"kelp goby, halfblind goby",fish,total length,0.0115,2.984
+Liparis sp.,NA,fish,total length,0.007,3.195
+Liparis mucosus,slimy snailfish,fish,total length,0.00126,3.59
+Medialuna californiensis,halfmoon,fish,total length,0.008533383,3.454
+Micrometrus minimus,NA,fish,total length,0.01,3.207
+Mola mola,ocean sunfish,fish,total length,0.0454,3.0496
+Mugil cephalus,mullet,fish,total length,0.020758497,2.8
+Myliobatis californica,bat ray,fish,total length,1.30E-05,3.0928
+Neoclinus blanchardi,sarcastic fringehead,fish,total length,0.009,3.003
+Neoclinus stephensae,yellowfin fringehead,fish,total length,0.0095,2.824
+Neoclinus uninotatus,onespot fringehead,fish,total length,0.0044,3.216
+Ophiodon elongatus,lingcod,fish,total length,1.13E-05,2.99
+Orthonopias triacis,snubnose sculpin,fish,total length,0.015796077,2.958
+Oxyjulis californica,senorita,fish,total length,0.006504479,3.16
+Oxylebius pictus,painted greenling,fish,total length,0.004406273,3.384
+Paralabrax clathratus,kelp bass,fish,total length,0.005064877,3.27
+Paralabrax maculatofasciatus,spotted sandbass,fish,total length,0.027143969,3.0187
+Paralabrax nebulifer,barred sandbass,fish,total length,0.008873807,3.1128
+Paralichthys californicus,California halibut,fish,total length,0.009160258,3.033
+Phanerodon atripes,sharpnose surfperch,fish,total length,0.024324924,2.996
+Phanerodon furcatus,white surfperch,fish,total length,0.024324924,2.996
+Platyrhinoides triseriata,thornback,fish,total length,0.006645047,2.9774
+Pleuronichthys coenosus,C-O turbot,fish,total length,0.024489584,3.044
+Porichthys notatus,plainfin midshipman,fish,total length,0.0207,2.916
+Prionace glauca,blue shark,fish,total length,2.70E-06,3.1305
+Rhacochilus toxotes,rubberlip surfperch,fish,total length,0.015758712,3.01
+Rhacochilus vacca,pile perch,fish,total length,0.015758712,3.01
+Rhamphocottus richardsoni,NA,fish,total length,0.015796077,2.958
+Coryphopterus nicholsi,blackeye goby,fish,total length,0.0115,2.984
+Sarda chiliensis,eastern pacific bonito,fish,total length,7.63E-06,3.0892
+Sardinops sagax,pacific sardine,fish,total length,0.001297179,3.113
+Sardinops sagax,pacific sardine,fish,total length,0.01246083,3.02
+Scomber japonicus,"pacific mackerel, greenback mackerel",fish,total length,0.003380887,3.39358
+Scorpaena guttata,California scorpionfish,fish,total length,0.0201,3.0074
+Scorpaenichthys marmoratus,cabezon,fish,total length,1.61E-05,3.055
+Sebastes serranoides,olive rockfish,fish,total length,0.008630369,3.136
+Sebastes atrovirens,kelp rockfish,fish,total length,0.009348021,3.172
+Sebastes auriculatus,brown rockfish,fish,total length,0.044,2.74
+Sebastes carnatus,gopher rockfish,fish,total length,0.015617415,3.08
+Sebastes caurinus,copper rockfish,fish,total length,0.012113687,3.13
+Sebastes chrysomelas,black and yellow rockfish,fish,total length,0.014389747,3.11
+Sebastes dalli,NA,fish,total length,0.00945,3.21542
+Sebastes diploproa,splitnose rockfish,fish,total length,0.0195,2.927
+Sebastes entomelas,widow rockfish,fish,total length,0.01642,2.94256
+Sebastes hopkinsi,squarespot rockfish,fish,total length,0.1464,2.98355
+Sebastes maliger,NA,fish,total length,0.1,2.5
+Sebastes melanops,black rockfish,fish,total length,0.008998625,3.19
+Sebastes miniatus,vermilion rockfish,fish,total length,0.015986652,3.04
+Sebastes mystinus,blue rockfish,fish,total length,0.015773026,2.9884
+Sebastes nebulosus,china rockfish,fish,total length,0.011790642,3.18
+Sebastes paucispinis,bocaccio,fish,total length,5.83E-05,3.0941
+Sebastes pinniger,canary rockfish,fish,total length,0.009718258,3.15
+Sebastes rastrelliger,grass rockfish,fish,total length,0.045,2.77
+Sebastes rubrivinctus,NA,fish,total length,0.020526545,2.9431
+Sebastes saxicola,olive-backed rockfish,fish,total length,0.02479,2.80487
+Sebastes semicinctus,halfbanded rockfish,fish,total length,0.0127,3.016
+Sebastes serriceps,treefish,fish,total length,0.014,3.081
+Semicossyphus pulcher,California sheephead,fish,total length,0.023791511,2.9066
+Seriola lalandi,yellowtail,fish,total length,0.023888215,2.85
+Sphyraena argentea,california barracuda,fish,total length,4.12E-06,2.983
+Squalus acanthias,NA,fish,total length,1.10E-06,2.94
+Squalus acanthias,NA,fish,total length,3.08E-04,3.57
+Squatina californica,pacific angel shark,fish,total length,0.008164903,3.0193
+Torpedo californica,pacific electric ray,fish,total length,0.041677153,2.7748
+Trachurus symmetricus,jack mackerel,fish,total length,0.009326056,3.1246
+Triakis semifasciata,leopard shark,fish,total length,2.09E-05,2.88
+Zalembius rosaceus,NA,fish,total length,0.01532,2.927962

@@ -1,0 +1,243 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, results = 'asis')
+source("01_global.R")
+```
+
+```{r}
+# Benthic_Groups <- species_info %>% 
+#   dplyr::filter(scientific_name %in% Benthic_Biomass_Species) %>% 
+#   dplyr::select(common_name, scientific_name, targeted_broad, trophic_broad) %>% 
+#   dplyr::distinct(scientific_name, .keep_all = TRUE) %>% 
+#   readr::write_csv("Meta_Data/Benthic_Groups.csv")
+```
+
+
+```{r setup, include=FALSE}
+
+site_data <- Site_Info |>
+  dplyr::mutate(Island = IslandName) |> 
+  dplyr::select(SiteNumber, Island, IslandName, SiteCode, SiteName, 
+                Reference, ReserveStatus, ARMs, ReserveYear,
+                Latitude, Longitude, MeanDepth, Rock, Cobble, Sand) |>
+  dplyr::rename(`Site #` = SiteNumber, `Site Code` = SiteCode, `Site` = SiteName,
+                Reference = Reference, `Reserve Status` = ReserveStatus, `Mean Depth` = MeanDepth, 
+                `Rock (%)` = Rock, `Cobble (%)` = Cobble, `Sand (%)` =  Sand) |> 
+  dplyr::mutate(Island = gsub(" Island", "", Island)) 
+
+Groups <- Species_Info |> 
+  dplyr::filter(ScientificName %in% c(Benthic_Biomass_Species, Fish_Biomass_Species)) |> 
+  dplyr::select(Classification, ScientificName, CommonName, Trophic_Broad, Targeted_Broad) |> 
+  dplyr::mutate(CommonName = gsub(", adult", "", CommonName),
+                CommonName = gsub(", male", "", CommonName),
+                CommonName = gsub("[(>)]", "", CommonName),
+                CommonName = gsub(" 1m", "", CommonName)) |> 
+  dplyr::distinct(ScientificName, .keep_all = TRUE) |> 
+  dplyr::arrange(Classification, Trophic_Broad, Targeted_Broad) |> 
+  dplyr::rename(`Scientific Name` = ScientificName, 
+                `Common Name` = CommonName, 
+                `Fishery Status` = Targeted_Broad, 
+                `Trophic Level` = Trophic_Broad)
+
+
+Fish_Regression_Table <- readr::read_csv("Meta_Data/Fish_Regression.csv")
+
+Benthic_Regression_Table <- readr::read_csv("Meta_Data/Benthic_Regression.csv")
+```
+
+```{r Trophic Interaction GLMMs, fig.height=10.5, fig.width=7.5}
+
+options(scipen = 999)
+
+library(mgcv)
+
+Mod_df <- arrow::read_feather("Tidy_Data/Mixed_Data_2005.feather") |> 
+  dplyr::select(
+    !dplyr::contains(c(
+      "white_abalone", "wakame",
+      "opaleye_juvenile", "northern_ronquil",
+      "black_croaker","northern_anchovy",
+      "leopard_shark","California_halibut",
+      "wolf_eel", "monkeyface_prickleback",
+      "sarcastic_fringehead", "plainfin_midshipman",
+      "walleye_surfperch", "ocean_sunfish",
+      "cusk_eel", "gunnel", "finescale", "orangethroat"))) |>
+  dplyr::left_join(Annual_Temp_Anom) |> 
+  dplyr::mutate(SiteCode = as.factor(SiteCode),
+                IslandCode = as.factor(IslandCode),
+                ReserveStatus = as.factor(ReserveStatus))
+
+mod_1 <- gam(
+  warty_sea_cucumber ~ ReserveStatus + Mean_ONI_Anom + 
+    s(SurveyYear, by = IslandCode) + s(SiteCode, bs = "re"), 
+  data = Mod_df, method = 'REML', family = gaussian
+)
+
+summary(mod_1)
+
+
+mod <- gam(
+  warty_sea_cucumber ~ s(SurveyYear, bs = 'cr') + 
+    ReserveStatus + IslandCode +
+    s(SurveyYear, by = ReserveStatus) +
+    s(SurveyYear, by = IslandCode) + 
+    s(SurveyYear, by = interaction(ReserveStatus, IslandCode), k = 2) +
+    s(SurveyYear, SiteCode, bs= 'fs'), 
+  data = Mod_df, method = 'REML', family = gaussian)
+
+sum_mod <- summary(mod)
+sum_mod
+a <- sum_mod$p.table
+a
+b <- sum_mod$s.table
+b
+
+
+
+
+
+
+
+purps <- car::Anova(
+  test = "F",
+  lme4::lmer(
+    data = Mod_df,
+    purple_sea_urchin ~ California_spiny_lobster * California_sheephead_male * California_sheephead_female * sunflower_star * giant_spined_sea_star + 
+      IslandCode + SurveyYear + (1 | SiteCode))) |> 
+  base::as.data.frame() |> 
+  tibble::rownames_to_column(var = "Predictor Variable") |> 
+  dplyr::arrange(`Pr(>F)`) |> 
+  dplyr::mutate(`F` = round(`F`, 3),
+                `Pr(>F)` = round(`Pr(>F)`, 3),
+                `Pr(>F)` = ifelse(`Pr(>F)` < 0.001, "< 0.001", as.character(`Pr(>F)`))) |> 
+  dplyr::rename(`P-Value` =`Pr(>F)`) |> 
+  dplyr::select(-Df.res)
+knitr::kable(purps)
+
+reds <- car::Anova(
+  test = "F",
+  lme4::lmer(
+    data = Mixed_2005,
+    red_sea_urchin ~ California_spiny_lobster * California_sheephead_male * California_sheephead_female * sunflower_star * giant_spined_sea_star + 
+      IslandCode + (1 | SurveyYear))) |> 
+  base::as.data.frame() |> 
+  tibble::rownames_to_column(var = "Predictor Variable") |> 
+  dplyr::arrange(`Pr(>F)`) |> 
+  dplyr::mutate(`F` = round(`F`, 3),
+                `Pr(>F)` = round(`Pr(>F)`, 3),
+                `Pr(>F)` = ifelse(`Pr(>F)` < 0.001, "< 0.001", as.character(`Pr(>F)`))) |> 
+  dplyr::rename(`P-Value` =`Pr(>F)`) |> 
+  dplyr::select(-Df.res)
+knitr::kable(reds)
+
+
+whites <- car::Anova(
+  test = "F",
+  lme4::lmer(
+    data = Mixed_2005,
+    white_sea_urchin ~ California_spiny_lobster * California_sheephead_male * California_sheephead_female * sunflower_star * giant_spined_sea_star + 
+      IslandCode + (1 | SurveyYear))) |> 
+  base::as.data.frame() |> 
+  tibble::rownames_to_column(var = "Predictor Variable") |> 
+  dplyr::arrange(`Pr(>F)`) |> 
+  dplyr::mutate(`F` = round(`F`, 3),
+                `Pr(>F)` = round(`Pr(>F)`, 3),
+                `Pr(>F)` = ifelse(`Pr(>F)` < 0.001, "< 0.001", as.character(`Pr(>F)`))) |> 
+  dplyr::rename(`P-Value` =`Pr(>F)`) |> 
+  dplyr::select(-Df.res)
+knitr::kable(whites)
+
+kelp <- car::Anova(
+  test = "F",
+  lme4::lmer(
+    data = Mixed_2005,
+    giant_kelp ~ California_spiny_lobster * California_sheephead_male * California_sheephead_female * sunflower_star * giant_spined_sea_star + 
+      white_sea_urchin * red_sea_urchin * purple_sea_urchin +
+      IslandCode + (1 | SurveyYear))) |> 
+  base::as.data.frame() |> 
+  tibble::rownames_to_column(var = "Predictor Variable") |> 
+  dplyr::arrange(`Pr(>F)`) |> 
+  dplyr::mutate(`F` = round(`F`, 3),
+                `Pr(>F)` = round(`Pr(>F)`, 3),
+                `Pr(>F)` = ifelse(`Pr(>F)` < 0.001, "< 0.001", as.character(`Pr(>F)`))) |> 
+  dplyr::rename(`P-Value` =`Pr(>F)`) |> 
+  dplyr::select(-Df.res)
+knitr::kable(kelp)
+
+```
+
+```{r GLMM Tables, results = 'asis'}
+# Make me a loop with all relevant tables
+GLMM <- GLMM_Results %>% 
+  dplyr::filter(`Response Variable` == "shannon_2005") |> 
+  dplyr::select(-`Response Variable`, -`VIF Score`)
+knitr::kable(GLMM)
+```
+
+```{r}
+GLMM_Vars <- c("shannon_2005",
+               "simpson_2005",
+               "warty_sea_cucumber",
+               "Kellets_whelk",
+               "California_spiny_lobster",
+               "white_sea_urchin",
+               "garibaldi",
+               "orange_puffball_sponge",
+               "bladder_chain_kelp",
+               "red_sea_urchin",
+               "California_sheephead_male",
+               "bat_star",
+               "giant_kelp",
+               "purple_sea_urchin",
+               "kelp_bass",
+               "sunflower_star",
+               "giant_spined_sea_star",
+               "Coronado_urchin",
+               "red_abalone",
+               "rock_wrasse")
+
+for (rv in GLMM_Vars) {
+  
+  print(rv)
+  
+  GLMM <- GLMM_Results %>% 
+    dplyr::filter(`Response Variable` == rv) |> 
+    dplyr::select(-`Response Variable`, -`VIF Score`)
+  print(knitr::kable(GLMM))
+}
+```
+
+```{r Groups}
+knitr::kable(Groups)
+```
+
+```{r RF Important Species}
+RF_VI <- RF_Importance %>%  
+  dplyr::mutate(CommonName = gsub("B", "", CommonName),
+                CommonName = gsub("C", "", CommonName),
+                CommonName = gsub("P", "", CommonName),
+                CommonName = gsub("I", "", CommonName),
+                CommonName = gsub("Cg", "", CommonName),
+                CommonName = gsub("[()]", "", CommonName),
+                Rank = order(desc(MeanDecreaseAccuracy))) |> 
+  dplyr::select(Rank, ScientificName, CommonName, Data_Type, 
+                Targeted, MeanDecreaseAccuracy, MeanDecreaseGini) |> 
+  dplyr::rename(`Scientific Name` = ScientificName, 
+                `Common Name` = CommonName, 
+                `Fishery Status` = Targeted, 
+                `Data Type` = Data_Type)
+knitr::kable(RF_VI)
+```
+
+```{r Regression Values}
+knitr::kable(Fish_Regression_Table) 
+knitr::kable(Benthic_Regression_Table) 
+```
+
+
+
+
+

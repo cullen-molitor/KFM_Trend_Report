@@ -1,0 +1,248 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source("01_global.R")
+```
+
+```{r}
+  Density <- arrow::read_feather("Tidy_Data/Density.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(Reference == TRUE, SurveyYear > 2004) |>
+    dplyr::mutate(Date = make_date(SurveyYear, 7, 1))
+  
+  Density_Orginal_16 <- arrow::read_feather("Tidy_Data/Density.feather") |>  
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(SiteNumber %in% 1:16, Survey_Type != "RDFC") |>
+    dplyr::mutate(Date = make_date(SurveyYear, 7, 1))
+  
+  Biomass <- arrow::read_feather("Tidy_Data/Biomass.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(Reference == TRUE, SurveyYear > 2004) |>
+    dplyr::mutate(Date = make_date(SurveyYear, 7, 1))
+  
+  Biomass_Orginal_16 <- arrow::read_feather("Tidy_Data/Biomass.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(SiteNumber %in% 1:16) |>
+    dplyr::mutate(Date = make_date(SurveyYear, 7, 1))
+  
+  RPC <- arrow::read_feather("Tidy_Data/RPC_Cover.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(Reference == TRUE, SurveyYear > 2004) |>
+    dplyr::mutate(Date = make_date(SurveyYear, 7, 1))
+  
+  RPC_Original_16 <- arrow::read_feather("Tidy_Data/RPC_Cover.feather") |> 
+    dplyr::mutate(IslandName = gsub(" Island", "", IslandName),
+                  IslandName = factor(IslandName, levels = Island_Levels_Short)) |> 
+    dplyr::filter(SiteNumber %in% 1:16) |>
+    dplyr::mutate(Date = base::as.Date(base::ISOdate(SurveyYear, 7, 1)),
+                  ReserveStatus = case_when(
+                    SurveyYear < 2003 & SiteCode == "LC" ~ "Inside",
+                    SurveyYear < 2003 & SiteCode == "CC" ~ "Inside",
+                    SurveyYear < 2003 ~ "Outside",
+                    TRUE ~ ReserveStatus))
+```
+
+
+## Par Par
+
+```{r Parastichopus parvimensis Density Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Density_Plot(Sci_Name = "Parastichopus parvimensis")
+```
+
+```{r Parastichopus parvimensis original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Parastichopus parvimensis",  
+                     Com_Name = "warty sea cucumber") 
+```
+
+## Kel Kel
+
+```{r Kelletia kelletii Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Kelletia kelletii", Com_Name = "Kellet's whelk")
+```
+
+```{r Kelletia kelletii original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Kelletia kelletii")
+```
+
+## Pan Int
+
+```{r Panulirus interruptus Density Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Density_Plot(Sci_Name = "Panulirus interruptus")
+```
+
+```{r Panulirus interruptus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Panulirus interruptus", 
+                     Com_Name = "California spiny lobster") 
+```
+
+## Hyp Rub
+
+```{r Hypsypops rubicundus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Hypsypops rubicundus", Com_Name = "garibaldi")
+```
+
+```{r Hypsypops rubicundus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Hypsypops rubicundus",  
+                     Com_Name = c("garibaldi, adult", "garibaldi, juvenile"))
+```
+
+## Cys Osm
+
+```{r Cystoseira cover Plots, fig.width=7.5, warning=FALSE, message=FALSE, fig.height=8.5}
+Percent_Cover_Plot(Sci_Name = "Cystoseira")
+```
+
+```{r Cystoseira original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Percent_Cover_Original_16_Plot(Sci_Name = "Cystoseira")
+```
+
+## Tet Aur
+
+```{r Tethya aurantia Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Tethya aurantia", Com_Name = "orange puffball sponge")
+```
+
+```{r Tethya aurantia original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Tethya aurantia")
+```
+
+## Str Fra
+
+```{r Strongylocentrotus franciscanus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Strongylocentrotus franciscanus", Com_Name = "red sea urchin")
+```
+
+```{r Strongylocentrotus franciscanus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Strongylocentrotus franciscanus")
+```
+
+## Pat Min
+
+```{r Patiria miniata Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Patiria miniata", Com_Name = "bat star")
+```
+
+```{r Patiria miniata original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Patiria miniata")
+```
+
+## Mac Pyr
+
+```{r Macrocystis pyrifera Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Macrocystis pyrifera", Com_Name = "giant kelp, adult (>1m)")
+```
+
+```{r Macrocystis pyrifera original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Macrocystis pyrifera")
+```
+
+## Sem Pul
+
+```{r Semicossyphus pulcher male Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Semicossyphus pulcher", Com_Name = "California sheephead, male")
+```
+
+```{r Semicossyphus pulcher male original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Semicossyphus pulcher", 
+                     Com_Name = "California sheephead, male")
+```
+
+## Lyt Ana
+
+```{r Lytechinus anamesus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Lytechinus anamesus", Com_Name = "white sea urchin")
+```
+
+```{r Lytechinus anamesus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Lytechinus anamesus")
+```
+
+## Str Pur
+
+```{r Strongylocentrotus purpuratus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Strongylocentrotus purpuratus", Com_Name = "purple sea urchin")
+```
+
+```{r Strongylocentrotus purpuratus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Strongylocentrotus purpuratus")
+```
+
+## Par Cla
+
+```{r Paralabrax clathratus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Paralabrax clathratus", Com_Name = "kelp bass")
+```
+
+```{r Paralabrax clathratus original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Paralabrax clathratus", 
+                     Com_Name = c("kelp bass, adult", "kelp bass, juvenile"))
+```
+
+## Pyc Hel
+
+```{r Pycnopodia helianthoides Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Pycnopodia helianthoides", Com_Name = "sunflower star")
+```
+
+```{r Pycnopodia helianthoides original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Biomass_16_Plot(Sci_Name = "Pycnopodia helianthoides")
+```
+
+
+
+
+
+
+
+# Other 
+
+
+## Pis Gig
+
+```{r Pisaster giganteus Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Pisaster giganteus", Com_Name = "giant-spined sea star")
+``` 
+
+```{r Pisaster giganteus original 16 sites, warning=FALSE, message=FALSE, fig.height=6, fig.width=10}
+Mean_Biomass_16_Plot(Sci_Name = "Pisaster giganteus")
+```
+
+## Cen Cor
+
+```{r Centrostephanus coronatus Density Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Density_Plot(Sci_Name = "Centrostephanus coronatus")
+``` 
+
+```{r Centrostephanus coronatus original 16 sites, warning=FALSE, message=FALSE, fig.height=6, fig.width=10}
+Mean_Density_16_Plot(Sci_Name = "Centrostephanus coronatus", Com_Name = "Coronado urchin")
+```
+
+## Hal Ruf
+
+```{r Haliotis rufescens Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Haliotis rufescens", Com_Name = "red abalone")
+``` 
+
+```{r Haliotis rufescens original 16 sites, warning=FALSE, message=FALSE, fig.height=6, fig.width=10}
+Mean_Biomass_16_Plot(Sci_Name = "Haliotis rufescens")
+```
+
+## Hal Sem Fem
+
+```{r Halichoeres semicinctus fem Biomass Plots, warning=FALSE, message=FALSE, fig.height=8.5, fig.width=7.5}
+Mean_Biomass_Plot(Sci_Name = "Halichoeres semicinctus", Com_Name = "rock wrasse")
+```
+
+```{r Halichoeres semicinctus fem original 16 sites, warning=FALSE, message=FALSE, fig.height=5, fig.width=9}
+Mean_Density_16_Plot(Sci_Name = "Halichoeres semicinctus",  
+                     Com_Name = c("rock wrasse, female", "rock wrasse, juvenile", "rock wrasse, male"))
+```
+

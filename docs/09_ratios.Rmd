@@ -1,0 +1,114 @@
+---
+output: word_document
+---
+
+```{r Global options set, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source("01_global.R")
+```
+
+```{r}
+All_Ratios <- arrow::read_feather("Tidy_Data/Ratios.feather")
+```
+
+## Ratio - Fish
+
+```{r, fig.height=11, fig.width=8.5}
+Fish_Ratio <- All_Ratios |> 
+  dplyr::filter(Classification %in% c("Fish", "Mixed"),
+                Metric == "biomass_ratio") |> 
+  dplyr::mutate(Targeted_Broad = factor(Targeted_Broad, levels = c('Targeted', 'Non-targeted', 'Mixed'))) |> 
+  dplyr::arrange(Targeted_Broad) |> 
+  dplyr::mutate(CommonName = fct_inorder(CommonName))
+
+p <- ggplot2::ggplot(data = Fish_Ratio, aes(x = SurveyYear, y = Mean_Ratio, color = Targeted_Broad)) +
+  ggplot2::geom_hline(aes(yintercept = 1)) +
+  ggplot2::geom_point(size = 3, stroke = 2, aes(shape = Targeted_Broad), fill = "blue") +
+  ggplot2::geom_errorbar(aes(x = SurveyYear, width = .5,
+                    ymin = Mean_Ratio - CI_minus,
+                    ymax = Mean_Ratio + CI_plus)) +
+  ggplot2::scale_color_manual(values = Target_Colors, limits = force) +
+  ggplot2::scale_shape_manual(values = c("Targeted" = 10, "Non-targeted" = 5, "Mixed" = 6)) +
+  ggplot2::labs(title = NULL, color = "Fishery Status", shape = "Fishery Status", x = NULL, y = NULL) +
+  ggplot2::scale_y_continuous(trans = 'log10') +
+  ggplot2::scale_x_continuous(breaks = 2005:Year_to_Filter_Data_by, expand = c(0, 0)) +
+  ggplot2::coord_cartesian(ylim = c(NA, max(Fish_Ratio$Mean_Ratio) * 1.2)) +
+  Ratio_theme()
+
+p1 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 1, scales = "free")
+
+p2 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 2, scales = "free")
+
+p3 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 3, scales = "free")
+
+p4 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 4, scales = "free")
+
+p5 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 5, scales = "free")
+
+p1
+p2
+p3
+p4
+p5
+```
+
+## Ratio - Benthic
+
+```{r, fig.height=11, fig.width=8.5}
+Benthic_Ratio <- All_Ratios |> 
+  dplyr::filter(Classification %in% c("Algae", "Invertebrates"),
+                Metric == "biomass_ratio") |> 
+  dplyr::mutate(Targeted_Broad = factor(Targeted_Broad, levels = c('Targeted', 'Non-targeted', 'Mixed'))) |> 
+  dplyr::arrange(Targeted_Broad) |> 
+  dplyr::mutate(CommonName = fct_inorder(CommonName))
+
+p <- ggplot2::ggplot(data = Benthic_Ratio, aes(x = SurveyYear, y = Mean_Ratio, color = Targeted_Broad)) +
+  ggplot2::geom_hline(aes(yintercept = 1)) +
+  ggplot2::geom_point(size = 3, stroke = 2, aes(shape = Targeted_Broad), fill = "blue") +
+  ggplot2::geom_errorbar(aes(x = SurveyYear, width = .5,
+                    ymin = Mean_Ratio - CI_minus,
+                    ymax = Mean_Ratio + CI_plus)) +
+  ggplot2::scale_color_manual(values = Target_Colors, limits = force) +
+  ggplot2::scale_shape_manual(values = c("Targeted" = 10, "Non-targeted" = 5, "Mixed" = 6)) +
+  ggplot2::labs(title = NULL, color = "Fishery Status", shape = "Fishery Status", x = NULL, y = NULL) +
+  ggplot2::scale_y_continuous(trans = 'log10') +
+  ggplot2::scale_x_continuous(breaks = 2005:Year_to_Filter_Data_by, expand = c(0, 0)) +
+  ggplot2::coord_cartesian(ylim = c(NA, max(Benthic_Ratio$Mean_Ratio) * 1.2)) +
+  Ratio_theme()
+
+p1 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 1, scales = "free")
+
+p2 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 2, scales = "free")
+
+p3 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 3, scales = "free")
+
+p4 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 4, scales = "free")
+
+p5 <- p +
+  ggforce::facet_wrap_paginate(
+    facets = vars(CommonName), nrow = 6, ncol = 1, page = 5, scales = "free")
+
+p1
+p2
+p3
+p4
+p5
+```
